@@ -37,7 +37,7 @@ OUTPUT_DIR=build/libs
 * First load all the needed resources in a project.
 
 ----
-oc create -f https://raw.githubusercontent.com/cescoffier/vertx-s2i/master/vertx-s2i-all.json
+oc create -f https://raw.githubusercontent.com/vert-x3/vertx-openshift-s2i/initial-work/vertx-s2i-all.json
 ----
 
 * Once the builder vertx-s2i has finished building, you can create an app with:

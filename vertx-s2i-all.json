@@ -116,12 +116,12 @@
             {
                "description": "Git source URI for application",
                "name": "GIT_URI",
-               "value": "https://github.com/cescoffier/vertx-s2i.git"
+               "value": "https://github.com/vert-x3/vertx-openshift-s2i.git"
             },
             {
                "description": "Git branch/tag reference",
                "name": "GIT_REF",
-               "value": "master"
+               "value": "initial-work"
             },
             {
                "description": "Git Directory",
