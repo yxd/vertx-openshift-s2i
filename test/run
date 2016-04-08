@@ -13,8 +13,8 @@ IMAGE_NAME=${IMAGE_NAME-vertx-s2i-candidate}
 
 test_dir="$(dirname "${BASH_SOURCE[0]}")"
 image_dir="${test_dir}/.."
-scripts_url="file://${image_dir}/.sti/bin"
-cid_file=`mktemp -u`
+scripts_url="file://${image_dir}/.s2i/bin"
+cid_file=`mktemp`
 sti_env=${STI_ENV-""}
 
 BUILDER=${BUILDER-maven}
@@ -62,6 +62,12 @@ prepare() {
   git config user.email "build@localhost" && git config user.name "builder"
   git add -A && git commit -m "Sample commit"
   popd >/dev/null
+
+  # CID file has been created, but docker now requires the CID file to not exist
+  if [ -f $cid_file ]; then
+    rm $cid_file
+  fi
+
   run_sti_build
 }
 
@@ -104,7 +110,7 @@ wait_for_cid() {
     sleep $sleep_time
   done
   if [ -f $cid_file ]; then
-    echo "CID file created"
+    echo "CID file created: $cid_file"
   else
     echo "CID file not created..."
   fi
