@@ -34,7 +34,7 @@ LABEL io.k8s.description="Platform for building Vert.x applications with maven o
 
 # COPY ./<builder_folder>/ /opt/openshift/
 LABEL io.openshift.s2i.scripts-url=image:///usr/local/sti
-COPY ./.sti/bin/ /usr/local/sti
+COPY ./.s2i/bin/ /usr/local/s2i
 
 RUN chown -R 1001:1001 /opt/openshift /opt/.m2
 RUN chmod -R go+rw /opt/openshift
