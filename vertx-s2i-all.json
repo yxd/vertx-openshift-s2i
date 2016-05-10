@@ -265,10 +265,6 @@
                                  {
                                     "containerPort": 8080,
                                     "protocol": "TCP"
-                                 },
-                                 {
-                                    "containerPort": 5701,
-                                    "protocol": "TCP"
                                  }
                               ],
                               "livenessProbe": {
