@@ -31,20 +31,20 @@ image_exists() {
 }
 
 container_exists() {
-  image_exists $(cat $cid_file)
+  image_exists $(cat ${cid_file})
 }
 
 container_ip() {
-  echo `docker inspect --format="{{ .NetworkSettings.IPAddress }}" $(cat $cid_file)`
-  docker inspect --format="{{ .NetworkSettings.IPAddress }}" $(cat $cid_file)
+  echo `docker inspect --format="{{ .NetworkSettings.IPAddress }}" $(cat ${cid_file})`
+  docker inspect --format="{{ .NetworkSettings.IPAddress }}" $(cat ${cid_file})
 }
 
 docker_machine_ip() {
-  echo $DOCKER_HOST | awk -F'//' '{print $2}' | awk -F':' '{print $1}'
+  echo ${DOCKER_HOST} | awk -F'//' '{print $2}' | awk -F':' '{print $1}'
 }
 
 docker_machine_port() {
-  echo `docker inspect --format='{{ (index (index .NetworkSettings.Ports "8080/tcp") 0).HostPort }}' $(cat $cid_file)`
+  echo `docker inspect --format='{{ (index (index .NetworkSettings.Ports "8080/tcp") 0).HostPort }}' $(cat ${cid_file})`
 }
 
 run_sti_build() {
@@ -64,8 +64,8 @@ prepare() {
   popd >/dev/null
 
   # CID file has been created, but docker now requires the CID file to not exist
-  if [ -f $cid_file ]; then
-    rm $cid_file
+  if [ -f ${cid_file} ]; then
+    rm ${cid_file}
   fi
 
   run_sti_build
@@ -76,15 +76,13 @@ run_test_application() {
 }
 
 cleanup() {
-  if [ -f $cid_file ]; then
+  if [ -f ${cid_file} ]; then
     if container_exists; then
-      docker stop $(cat $cid_file)
+      docker stop $(cat ${cid_file})
     fi
   fi
-  # TODO: Wait a little for shutdown and then rmi -f
   sleep 3
   if image_exists ${IMAGE_NAME}-testapp-${BUILDER}; then
-    # docker rmi ${IMAGE_NAME}-testapp
     docker rmi -f ${IMAGE_NAME}-testapp-${BUILDER}
   fi
 }
@@ -94,7 +92,7 @@ check_result() {
   if [[ "$result" != "0" ]]; then
     echo "S2I image '${IMAGE_NAME}' test FAILED (exit code: ${result})"
     cleanup
-    exit $result
+    exit ${result}
   fi
 }
 
@@ -103,13 +101,13 @@ wait_for_cid() {
   local sleep_time=1
   local attempt=1
   local result=1
-  while [ $attempt -le $max_attempts ]; do
-    [ -f $cid_file ] && break
+  while [ ${attempt} -le ${max_attempts} ]; do
+    [ -f ${cid_file} ] && break
     echo "Waiting for container to start..."
     attempt=$(( $attempt + 1 ))
-    sleep $sleep_time
+    sleep ${sleep_time}
   done
-  if [ -f $cid_file ]; then
+  if [ -f ${cid_file} ]; then
     echo "CID file created: $cid_file"
   else
     echo "CID file not created..."
@@ -127,7 +125,7 @@ test_connection() {
   local sleep_time=1
   local attempt=1
   local result=1
-  while [ $attempt -le $max_attempts ]; do
+  while [ ${attempt} -le ${max_attempts} ]; do
 
     unamestr=`uname`
     if [[ "$unamestr" == 'Darwin' ]]; then
@@ -136,12 +134,12 @@ test_connection() {
       response_code=$(curl -s -w "%{http_code}" -o /dev/null http://$(docker_machine_ip):$(docker_machine_port)/)
     else
       echo "Sending GET request to http://$(container_ip):${test_port}/"
-      response_code=$(curl -s -w %{http_code} -o /dev/null http://$(container_ip):${test_port}/)
+      response_code=$(curl -s -w "%{http_code}" -o /dev/null http://$(container_ip):${test_port}/)
     fi
     status=$?
-    if [ $status -eq 0 ]; then
+    if [ ${status} -eq 0 ]; then
       echo "We have a $response_code HTTP status code"
-      if [ $response_code -eq 200 ]; then
+      if [ ${response_code} -eq 200 ]; then
         result=0
         # We move up the break, as it may take time to deploy the app
         break
@@ -149,9 +147,9 @@ test_connection() {
     fi
 
     attempt=$(( $attempt + 1 ))
-    sleep $sleep_time
+    sleep ${sleep_time}
   done
-  return $result
+  return ${result}
 }
 
 # Build the application image twice to ensure the 'save-artifacts' and
