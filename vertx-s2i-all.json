@@ -33,7 +33,7 @@
             "source": {
                "type": "Git",
                "git": {
-                  "uri": "https://github.com/vertx-3/vertx-s2i.git",
+                  "uri": "https://github.com/vertx-3/vertx-openshift-s2i.git",
                   "ref": "issues/#8-s2i-build-failed"
                }
             },
