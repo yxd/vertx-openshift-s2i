@@ -33,8 +33,8 @@
             "source": {
                "type": "Git",
                "git": {
-                  "uri": "https://github.com/cescoffier/vertx-s2i.git",
-                  "ref": "master"
+                  "uri": "https://github.com/vertx-3/vertx-s2i.git",
+                  "ref": "issues/#8-s2i-build-failed"
                }
             },
             "strategy": {
