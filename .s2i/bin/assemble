@@ -10,7 +10,7 @@
 if [ "$1" = "-h" ]; then
 	# If the 'vertx-s2i' assemble script is executed with '-h' flag,
 	# print the usage.
-	exec /usr/local/sti/usage
+	exec /usr/local/s2i/usage
 	exit 0
 fi
 

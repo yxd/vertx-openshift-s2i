@@ -1,11 +1,11 @@
 #!/bin/bash -e
 cat <<EOF
-This is the vertx-sti S2I image:
+This is the vertx-s2i S2I image:
 To use it, install S2I: https://github.com/openshift/source-to-image
 
 Sample invocation:
 
-sti build git://<source code> vertx-sti <application image>
+s2i build git://<source code> vertx-sti <application image>
 
 To build it uses either Maven or Gradle. In both case the final jar should be a fat jar ending with "-fat.jar".
 
