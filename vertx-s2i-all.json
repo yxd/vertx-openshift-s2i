@@ -62,7 +62,7 @@
             "name": "vertx-centos"
          },
          "spec": {
-            "dockerImageRepository": "centos:7"
+            "dockerImageRepository": "openshift/base-centos7"
          }
       },
       {
