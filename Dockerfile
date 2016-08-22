@@ -1,4 +1,4 @@
-FROM openshift/base-centos7
+FROM centos:7
 MAINTAINER Clement Escoffier <clement@apache.org>
 
 # Install build tools on top of base image
