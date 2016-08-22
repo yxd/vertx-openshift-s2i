@@ -33,7 +33,7 @@ LABEL io.k8s.description="Platform for building Vert.x applications with maven o
       io.openshift.tags="builder,maven-3,gradle-2.8,vert.x"
 
 # COPY ./<builder_folder>/ /opt/openshift/
-LABEL io.openshift.s2i.scripts-url=image:///usr/local/sti
+LABEL io.openshift.s2i.scripts-url=image:///usr/local/s2i
 COPY ./.s2i/bin/ /usr/local/s2i
 
 RUN chown -R 1001:1001 /opt/openshift /opt/.m2
