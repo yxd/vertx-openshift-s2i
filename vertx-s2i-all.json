@@ -33,7 +33,7 @@
             "source": {
                "type": "Git",
                "git": {
-                  "uri": "https://github.com/cescoffier/vertx-s2i.git",
+                  "uri": "https://github.com/vert-x3/vertx-openshift-s2i.git",
                   "ref": "master"
                }
             },
