@@ -74,7 +74,7 @@ if [ -f "$LOCAL_SOURCE_DIR/pom.xml" ]; then
   pushd ${LOCAL_SOURCE_DIR} &> /dev/null
 
   if [ -z "$BUILDER_ARGS" ]; then
-    export BUILDER_ARGS="package -Popenshift -DskipTests"
+    export BUILDER_ARGS="package -Popenshift -DskipTests -B"
   fi
 
   echo "Found pom.xml... attempting to build with 'mvn -e ${BUILDER_ARGS}'"
@@ -146,6 +146,29 @@ elif [ -f "$LOCAL_SOURCE_DIR/build.gradle" ]; then
   fi
 
   popd &> /dev/null
+fi
+
+CONTAINER_HEAP_PERCENT=${CONTAINER_HEAP_PERCENT:-0.50}
+CONTAINER_MEMORY_IN_BYTES=`cat /sys/fs/cgroup/memory/memory.limit_in_bytes`
+
+DEFAULT_MEMORY_CEILING=$((2**40-1))
+if [ "${CONTAINER_MEMORY_IN_BYTES}" -lt "${DEFAULT_MEMORY_CEILING}" ]; then
+  CONTAINER_MEMORY_IN_MB=$((${CONTAINER_MEMORY_IN_BYTES}/1024**2))
+  CONTAINER_HEAP_MAX=$(echo "${CONTAINER_MEMORY_IN_MB} ${CONTAINER_HEAP_PERCENT}" | awk '{ printf "%d", $1 * $2 }')
+  JAVA_HEAP_MAX=-Xmx${CONTAINER_HEAP_MAX}
+fi
+
+# Java configuration
+
+if [ -z $JAVA_GC_OPTS ]; then
+  # note - MaxPermSize no longer valid with v8 of the jdk ... used to have -XX:MaxPermSize=100m
+  JAVA_GC_OPTS="-XX:+UseParallelGC -XX:MinHeapFreeRatio=20 -XX:MaxHeapFreeRatio=40 -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -XX:MaxMetaspaceSize=100m"
+fi
+if [ ! -z "${CONTAINER_CORE_LIMIT}" ]; then
+  JAVA_CORE_LIMIT="-XX:ParallelGCThreads=${CONTAINER_CORE_LIMIT} -Djava.util.concurrent.ForkJoinPool.common.parallelism=${CONTAINER_CORE_LIMT} -XX:CICompilerCount=2"
+fi
+if [ ! -z "${USE_JAVA_DIAGNOSTICS}" ]; then
+  JAVA_DIAGNOSTICS="-XX:NativeMemoryTracking=summary -XX:+PrintGC -XX:+PrintGCDateStamps -XX:+PrintGCTimeStamps -XX:+UnlockDiagnosticVMOptions"
 fi
 
 # Copy (probably binary) artifacts from the deployments/
