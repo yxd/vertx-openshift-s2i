@@ -21,7 +21,7 @@ BUILDER=${BUILDER-maven}
 
 # Since we built the candidate image locally, we don't want S2I to attempt to pull
 # it from Docker hub
-sti_args="--force-pull=false -s ${scripts_url}"
+sti_args="-s ${scripts_url}"
 
 # Port the image exposes service to be tested
 test_port=8080
