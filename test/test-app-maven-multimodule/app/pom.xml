@@ -14,8 +14,8 @@
   <artifactId>vertx-hello-world-app</artifactId>
 
   <properties>
-    <vertx.version>3.2.1</vertx.version>
-    <main.verticle>io.vertx.sample.HelloWorldVerticle</main.verticle>
+    <vertx.version>3.5.0.Beta1</vertx.version>
+    <vertx.verticle>io.vertx.sample.HelloWorldVerticle</vertx.verticle>
   </properties>
 
   <dependencyManagement>
@@ -39,7 +39,7 @@
 
     <dependency>
       <groupId>io.vertx</groupId>
-      <artifactId>vertx-hazelcast</artifactId>
+      <artifactId>vertx-infinispan</artifactId>
     </dependency>
 
     <dependency>
