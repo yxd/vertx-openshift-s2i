@@ -2,13 +2,13 @@ FROM openshift/base-centos7
 MAINTAINER Clement Escoffier <clement@apache.org>
 
 # Install build tools on top of base image
-ENV GRADLE_VERSION 2.11
-ENV MAVEN_VERSION 3.3.9
+ENV GRADLE_VERSION 4.1
+ENV MAVEN_VERSION 3.5.0
 
 RUN yum install -y --enablerepo=centosplus \
     tar unzip bc which lsof java-1.8.0-openjdk java-1.8.0-openjdk-devel && \
     yum clean all -y && \
-    (curl -0 http://www-us.apache.org/dist/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-3.3.9-bin.tar.gz | \
+    (curl -0 http://www-us.apache.org/dist/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.tar.gz | \
     tar -zx -C /usr/local) && \
     mv /usr/local/apache-maven-$MAVEN_VERSION /usr/local/maven && \
     ln -sf /usr/local/maven/bin/mvn /usr/local/bin/mvn && \
@@ -30,7 +30,7 @@ ENV BUILDER_VERSION 1.0
 LABEL io.k8s.description="Platform for building Vert.x applications with maven or gradle" \
       io.k8s.display-name="Vert.x 3 builder 1.0" \
       io.openshift.expose-services="8080:http" \
-      io.openshift.tags="builder,maven-3,gradle-2.8,vert.x"
+      io.openshift.tags="builder,maven-3,gradle-4,vert.x"
 
 # COPY ./<builder_folder>/ /opt/openshift/
 LABEL io.openshift.s2i.scripts-url=image:///usr/local/s2i
