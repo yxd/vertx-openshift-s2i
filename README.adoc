@@ -5,7 +5,7 @@ This Source-to-Image Builder let's you create projects using Vert.x 3 and built 
 * maven
 * gradle
 
-This builder expect the build process to generate a (unique) "fat" jar (with a file ending with `-fat.jar`).
+This builder expect the build process to generate a (unique) "fat" jar (with a file ending with `.jar`).
 
 NOTE: If a project has a pom.xml and a build.gradle, maven will take precedence
 

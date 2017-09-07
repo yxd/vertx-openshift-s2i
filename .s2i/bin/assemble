@@ -39,7 +39,7 @@ DEPLOY_DIR=/opt/openshift
 function copy_artifacts() {
   if [ -d ${LOCAL_SOURCE_DIR}/$1 ]; then
     echo "Copying all (fat) JAR artifacts from $LOCAL_SOURCE_DIR/$1 directory into $DEPLOY_DIR for later deployment..."
-    cp -v ${LOCAL_SOURCE_DIR}/$1/*-fat.jar ${DEPLOY_DIR} 2> /dev/null
+    cp -v ${LOCAL_SOURCE_DIR}/$1/*.jar ${DEPLOY_DIR} 2> /dev/null
   fi
 
 	# Copy src/env to deploy directory
@@ -157,8 +157,8 @@ fi
 #   cp -v $LOCAL_SOURCE_DIR/configuration/* $ARTIFACTS_HOME
 # fi
 
-if [ $(ls /opt/openshift/*-fat.jar | wc -l) -eq 1 ]; then
-  mv /opt/openshift/*-fat.jar /opt/openshift/vertx-app.jar
+if [ $(ls /opt/openshift/*.jar | wc -l) -eq 1 ]; then
+  mv /opt/openshift/*.jar /opt/openshift/vertx-app.jar
   [ ! -f /opt/openshift/vertx-app.jar ] && echo "Application could not be properly built." && exit 1
   echo "Application jar file is located in /opt/openshift/vertx-app.jar"
 	echo "Files located in the application directory:"

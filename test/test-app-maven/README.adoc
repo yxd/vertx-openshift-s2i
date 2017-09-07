@@ -11,5 +11,5 @@ mvn package
 And run with:
 
 ----
-java -jar [build/libs|target]/vertx-hello-world-fat.jar
+java -jar [build/libs|target]/vertx-hello-world-VERSION.jar
 ----
