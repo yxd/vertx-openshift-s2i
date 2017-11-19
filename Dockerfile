@@ -3,7 +3,7 @@ MAINTAINER Clement Escoffier <clement@apache.org>
 
 # Install build tools on top of base image
 ENV GRADLE_VERSION 4.1
-ENV MAVEN_VERSION 3.5.0
+ENV MAVEN_VERSION 3.5.2
 
 RUN yum install -y --enablerepo=centosplus \
     tar unzip bc which lsof java-1.8.0-openjdk java-1.8.0-openjdk-devel && \
