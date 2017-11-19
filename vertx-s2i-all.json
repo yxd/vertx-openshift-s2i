@@ -31,7 +31,7 @@
                 "source": {
                     "type": "Git",
                     "git": {
-                        "uri": "https://github.com/vert-x3/vertx-openshift-s2i.git",
+                        "uri": "https://github.com/yxd/vertx-openshift-s2i.git",
                         "ref": "master"
                     }
                 },
@@ -111,7 +111,7 @@
                 {
                     "description": "Git source URI for application",
                     "name": "GIT_URI",
-                    "value": "https://github.com/vert-x3/vertx-openshift-s2i.git"
+                    "value": "https://github.com/yxd/vertx-openshift-s2i.git"
                 },
                 {
                     "description": "Git branch/tag reference",
